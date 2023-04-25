@@ -132,3 +132,5 @@ REST_FRAMEWORK = {
 }
 
 MAX_STUDENTS_PER_COURSE = 3
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

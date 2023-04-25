@@ -15,8 +15,3 @@ class CourseSerializer(serializers.ModelSerializer):
         """Метод для валидации. Вызывается при создании и обновлении."""
 
         # TODO: добавьте требуемую валидацию
-        count_students = Student.objects.count()
-        if count_students > settings.MAX_STUDENTS_PER_COURSE:
-            raise ValidationError("Превышено количество студентов на курсе")
-
-        return data
