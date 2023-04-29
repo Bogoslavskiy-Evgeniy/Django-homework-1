@@ -25,11 +25,12 @@ def student_factory():
 def test_get_course(client, course_factory, student_factory):
     student = student_factory()
     course = course_factory(_quantity=5)
-    response = client.get('/api/v1/courses/3/')
+    course_id = course[3].id
+    response = client.get('/api/v1/courses/', {'id': course_id})
 
     assert response.status_code == 200
     data = response.json()
-    assert data['id'] == 3
+    assert data[0]['id'] == course_id
 
 
 @pytest.mark.django_db
@@ -49,11 +50,12 @@ def test_get_list_course(client, course_factory, student_factory):
 def test_filter_course_id(client, course_factory, student_factory):
     student = student_factory()
     course = course_factory(_quantity=3)
-    response = client.get('/api/v1/courses/2/')
+    course_id = course[2].id
+    response = client.get('/api/v1/courses/', {'id': course_id})
 
     assert response.status_code == 200
     data = response.json()
-    assert data['id'] == 2
+    assert data[0]['id'] == course_id
 
 
 
@@ -62,7 +64,7 @@ def test_filter_course_id(client, course_factory, student_factory):
 def test_filter_course_name(client, course_factory, student_factory):
     student = student_factory()
     course = course_factory(_quantity=3, name='Math')
-    response = client.get('/api/v1/courses/?name=Math')
+    response = client.get('/api/v1/courses/', {'name': 'Math'})
 
     assert response.status_code == 200
     data = response.json()
@@ -83,20 +85,22 @@ def test_create_course(client):
 def test_update_course(client, course_factory, student_factory):
     student = student_factory()
     course = course_factory(name='Math')
+    base_url = '/api/v1/courses/'
+    url = f'{base_url}{course.id}/'
     new_data = {'name': 'History'}
-    response = client.patch('/api/v1/courses/1/', data=new_data)
+    response = client.patch(url, data=new_data)
 
     assert response.status_code == 200
     data = response.json()
     assert data['name'] == 'History'
 
-
-
 @pytest.mark.django_db
 def test_delete_course(client, course_factory, student_factory):
     student = student_factory()
     course = course_factory()
-    response = client.delete('/api/v1/courses/1/')
+    base_url = '/api/v1/courses/'
+    url = f'{base_url}{course.id}/'
+    response = client.delete(url)
 
     assert response.status_code == 204
 
