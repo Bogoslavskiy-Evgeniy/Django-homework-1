@@ -67,5 +67,5 @@ jobs:
           username: ${{ secrets.SSH_USER}}
           password: ${{ secrets.SSH_PASSWORD}}
           port: ${{ secrets.SSH_PORT}}
-          script: expect /home/jony/Django-homeworks/3.2-crud/stocks_products.pull.exp
+          script: expect /home/jony/Django-homeworks/3.2-crud/stocks_products/pull.exp
 
