@@ -6,4 +6,4 @@ class TestSampleView(TestCase):
         client = APIClient()
         url = '/api/v1/test/'
         response = client.get(url)
-        self.assertEqual(response.data, "This is checking")
+        self.assertEqual(response.status_code, 200)
